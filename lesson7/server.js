@@ -3,6 +3,7 @@ const url = require("url")
 const conf = require("./config")
 const fs = require("fs")
 const webLoader = require('./loader')
+const log = require("./log")
 // console.log(conf) 
 http.createServer((request, response) => {
   // console.log(url.parse(request.url, true).pathname)
@@ -10,6 +11,7 @@ http.createServer((request, response) => {
   console.log('pathName列表' + pathName)
   if(isStatic(pathName)){
     // 请求的静态文件
+    log('读取静态文件' + pathName)
     try {
       // console.log(conf.path + pathName)
       const data = fs.readFileSync(conf['path'] + pathName)
@@ -43,6 +45,8 @@ http.createServer((request, response) => {
   }
 }).listen(conf.port)
 
+console.log('服务已启动')
+  log('服务已启动')
 function isStatic (pathName) {
   for (let i = 0; i < conf.static_file_type.length; i ++) {
     const temp = conf.static_file_type[i];
