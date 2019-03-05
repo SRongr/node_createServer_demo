@@ -1,4 +1,5 @@
 const studentService = require("../service/studentService")
+const url = require('url')
 
 const path = new Map()
 function getData (req, res) {
@@ -19,9 +20,32 @@ function getData (req, res) {
     // res.write(data)
    
 }
-function getData2 (req, res) {
-
+function login (req, res) {
+  const params = url.parse(req.url, true).query
+  console.log(params)
+  const stuNum = params.stuNum
+  const password = params.password
+  console.log('loginController.js', stuNum)
+  studentService.queryPWDByStudentNum(stuNum, (queryRes) => {
+    if (queryRes.length === 0) {
+      // 没有这个学号
+      res.writeHead(404)
+      res.write('NotFound')
+      res.end()
+    } else {
+      const resPWD = queryRes[0].pwd
+      console.log(queryRes)
+      if (resPWD === password) {
+        res.writeHead(200)
+        res.write('OK')
+      } else {
+        res.writeHead(500)
+        res.write('Fail')
+      }
+      res.end()
+    }
+  })
 }
 path.set('/getData', getData)
-path.set('/getData2', getData2)
+path.set('/login', login)
 module.exports.path = path

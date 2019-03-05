@@ -13,6 +13,6 @@ window.onload = function () {
       console.log(httpRes.readyState)
     }
   }
-  httpRes.open('Get', '/getData')
-  httpRes.send()
+  // httpRes.open('Get', '/getData')
+  // httpRes.send()
 }

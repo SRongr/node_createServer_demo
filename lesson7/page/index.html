@@ -8,12 +8,37 @@
   <link rel="stylesheet" href="index.css">
 </head>
 <body>
-  <h1>hello </h1>
-  <h2>hahahah</h2>
-  <div><img src="./me.png" alt=""></div>
-
-  <input type="text" name="name">
-  <input type="password" name="password">
+  <!-- <h1>hello </h1> -->
+  学号  <input type="text" id="stuNum">
+  password  <input type="password" id="password">
+  <input type="submit" value="提交" onclick="login()">
   <script src="./login.js"></script>
+  <script>
+  
+  
+    function login () {
+      const stuNum = document.getElementById('stuNum').value
+      const password = document.getElementById('password').value
+      const params = "?stuNum=" + stuNum + '&password=' + password
+      const httpRes = new XMLHttpRequest()
+      httpRes.onreadystatechange = function () {
+        if (httpRes.readyState === 4) {
+          if (httpRes.status === 200) {
+            console.log('成功')
+            console.log(httpRes.responseText)
+            console.log(httpRes.responseType)
+            alert('成功')
+          } else {
+            console.log('失败')
+            alert('失败')
+          }
+        } else {
+          console.log(httpRes.readyState)
+        }
+      }
+      httpRes.open('GET', '/login' + params)
+      httpRes.send()
+    }
+  </script>
 </body>
 </html>

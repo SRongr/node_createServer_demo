@@ -1,8 +1,10 @@
-const connection = require('./dbutil')
-connection.connect();
+const dbutil = require('./dbutil')
+
+
 function queryAllStudent (success) {
   const querySql = "select * from student;"
-  // connection.connect();
+  const connection = dbutil.createConnection()
+  connection.connect();
   connection.query(querySql,  (err, result) => {
     if (err === null) {
       console.log(result)
@@ -12,7 +14,7 @@ function queryAllStudent (success) {
     }
   })
   console.log('end')  
-  // connection.end();
+  connection.end();
 }
 function queryStudentByClassAndAge (classNum, age) {
   const querySql = `select * from student where class = ? and age = ?;`
@@ -26,9 +28,23 @@ function queryStudentByClassAndAge (classNum, age) {
   })
   // connection.end();
 }
-
+function queryPWDByStudentNum (student_num, success) {
+  const querySql = `select pwd from student where student_num = ?;`
+  const connection = dbutil.createConnection()
+  connection.connect();
+  connection.query(querySql, student_num, (err, res) => {
+    if (!err) {
+      console.log(res)
+      success(res)
+    } else {
+      console.log(err)
+    }
+  })
+  connection.end()
+}
 module.exports = {
   queryAllStudent,
   queryStudentByClassAndAge,
+  queryPWDByStudentNum,
 }
 
