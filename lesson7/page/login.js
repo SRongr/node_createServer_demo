@@ -4,6 +4,8 @@ window.onload = function () {
     if (httpRes.readyState === 4) {
       if (httpRes.status === 200) {
         console.log('成功')
+        console.log(httpRes.responseText)
+        console.log(httpRes.responseType)
       } else {
         console.log('失败')
       }

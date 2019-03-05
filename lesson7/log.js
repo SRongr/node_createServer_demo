@@ -5,7 +5,7 @@ const filePath = conf.log_file + conf.log_name
 // fs.writeFile(filePath, 'web', function () {
 //   console.log('')
 // })
-console.log('===')
+// console.log('===')
 
 function log (data) {
   fs.appendFile(filePath, data + '\r\n', () => {})

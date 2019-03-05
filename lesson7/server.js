@@ -8,7 +8,7 @@ const log = require("./log")
 http.createServer((request, response) => {
   // console.log(url.parse(request.url, true).pathname)
   const pathName = url.parse(request.url, true).pathname
-  console.log('pathName列表' + pathName)
+  // console.log('pathName列表' + pathName)
   if(isStatic(pathName)){
     // 请求的静态文件
     log('读取静态文件' + pathName)
@@ -27,11 +27,13 @@ http.createServer((request, response) => {
     }
   } else {
     // 请求的动态资源
-    console.log('动态资源')
+    console.log('动态资源', pathName)
     if (webLoader.has(pathName)) {
       try {
         webLoader.get(pathName)(request, response)
+        console.log('have')
       } catch (error) { // 容错处理 服务器错误报500
+        console.log(error)
         response.writeHead(500)
         response.write("<html>500</html>")
         response.end()
@@ -45,7 +47,7 @@ http.createServer((request, response) => {
   }
 }).listen(conf.port)
 
-console.log('服务已启动')
+// console.log('服务已启动')
   log('服务已启动')
 function isStatic (pathName) {
   for (let i = 0; i < conf.static_file_type.length; i ++) {
