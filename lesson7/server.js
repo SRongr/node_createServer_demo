@@ -20,7 +20,7 @@ http.createServer((request, response) => {
       // console.log('end')
       response.end()
     } catch (error) {
-      // console.log(error)
+      console.log(error)
       response.writeHead(404)
       response.write("<html>404 NotFound</html>")
       response.end()
@@ -31,7 +31,7 @@ http.createServer((request, response) => {
     if (webLoader.has(pathName)) {
       try {
         webLoader.get(pathName)(request, response)
-        console.log('have')
+        // console.log('have')
       } catch (error) { // 容错处理 服务器错误报500
         console.log(error)
         response.writeHead(500)
@@ -47,7 +47,6 @@ http.createServer((request, response) => {
   }
 }).listen(conf.port)
 
-// console.log('服务已启动')
   log('服务已启动')
 function isStatic (pathName) {
   for (let i = 0; i < conf.static_file_type.length; i ++) {

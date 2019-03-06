@@ -3,7 +3,8 @@ const conf = require("./config")
 
 // console.log(conf)
 const web_files = conf['web_path']
-const files = fs.readdirSync(web_files)
+const files = fs.readdirSync(__dirname + '/' + web_files)
+
 
 const pathMap = new Map() // 汇总所有的pathMap 
 const contorllorSet = []  // 将controller 全都放入这个数组里

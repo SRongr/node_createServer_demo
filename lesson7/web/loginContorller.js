@@ -2,6 +2,8 @@ const studentService = require("../service/studentService")
 const url = require('url')
 
 const path = new Map()
+
+
 function getData (req, res) {
   // throw new Error('一个程序的错误')
   // console.log(queryAllStudent)
@@ -21,30 +23,85 @@ function getData (req, res) {
    
 }
 function login (req, res) {
-  const params = url.parse(req.url, true).query
-  console.log(params)
-  const stuNum = params.stuNum
-  const password = params.password
-  console.log('loginController.js', stuNum)
-  studentService.queryPWDByStudentNum(stuNum, (queryRes) => {
-    if (queryRes.length === 0) {
-      // 没有这个学号
-      res.writeHead(404)
-      res.write('NotFound')
-      res.end()
-    } else {
-      const resPWD = queryRes[0].pwd
-      console.log(queryRes)
-      if (resPWD === password) {
-        res.writeHead(200)
-        res.write('OK')
+  const query = url.parse(req.url, true).query
+  console.log(query)
+  req.on("data", (data) => {
+    dataStr = data.toString()[0] === '?' ? data.toString() : '?' + data.toString()
+    const params = url.parse(dataStr, true).query
+    const stuNum = params.stuNum
+    const password = params.password
+    console.log(stuNum)
+    studentService.queryPWDByStudentNum(stuNum, (queryRes) => {
+      if (queryRes.length === 0) {
+        // 没有这个学号
+        res.writeHead(404)
+        res.write('NotFound')
+        res.end()
       } else {
-        res.writeHead(500)
-        res.write('Fail')
+        const resPWD = queryRes[0].pwd
+        if (resPWD == password) {
+          /* 
+            ajax 跳转页面使用代码
+          */
+          res.writeHead(200)
+          res.write('OK')
+          /* 
+            From 表单跳转页面使用代码
+            res.writeHead(302, {"location": '/main.html'})
+          */
+        } else {
+          res.writeHead(500)
+          res.write('Fail')
+        }
+        res.end()
       }
-      res.end()
-    }
+    })
   })
+    // const stuNum = params.stuNum || 4
+    // const password = params.password || 3
+    // // console.log(stuNum, password, '21312312')
+    // // console.log('loginController.js', stuNum)
+    // studentService.queryPWDByStudentNum(stuNum, (queryRes) => {
+    //   if (queryRes.length === 0) {
+    //     // 没有这个学号
+    //     res.writeHead(404)
+    //     res.write('NotFound')
+    //     res.end()
+    //   } else {
+    //     const resPWD = queryRes[0].pwd
+    //     if (resPWD == password) {
+    //       res.writeHead(200)
+    //       res.write('OK')
+    //     } else {
+    //       res.writeHead(500)
+    //       res.write('Fail')
+    //     }
+    //     res.end()
+    //   }
+    // })
+  // })
+  // const stuNum = params.stuNum || 4
+  // const password = params.password || 3
+  // console.log('loginController.js', stuNum)
+  // studentService.queryPWDByStudentNum(stuNum, (queryRes) => {
+  //   if (queryRes.length === 0) {
+  //     // 没有这个学号
+  //     res.writeHead(404)
+  //     res.write('NotFound')
+  //     res.end()
+  //   } else {
+  //     const resPWD = queryRes[0].pwd
+  //     console.log(queryRes)
+  //     if (resPWD === password) {
+  //       res.writeHead(200)
+  //       res.write('OK')
+  //     } else {
+  //       res.writeHead(500)
+  //       res.write('Fail')
+  //     }
+  //     res.end()
+  //   }
+  // })
 }
 path.set('/getData', getData)
 path.set('/login', login)
