@@ -50,8 +50,12 @@ function login (req, res) {
             res.writeHead(302, {"location": '/main.html'})
           */
         } else {
-          res.writeHead(500)
-          res.write('Fail')
+          // res.writeHead(500)
+          // res.write('Fail')
+          
+          /*   // From 表单跳转页面使用代码
+            res.writeHead(302,  {"location": '/error.html'})
+          */
         }
         res.end()
       }
