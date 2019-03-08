@@ -29,7 +29,7 @@ function queryStudentByClassAndAge (classNum, age) {
   // connection.end();
 }
 function queryPWDByStudentNum (student_num, success) {
-  const querySql = `select pwd from student where student_num = ?;`
+  const querySql = `select * from student where student_num = ?;`
 
   const connection = dbutil.createConnection()
   connection.connect();

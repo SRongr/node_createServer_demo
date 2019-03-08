@@ -4,5 +4,6 @@
   "static_file_type": [".html",".jpg",".png",".js",".css",".gif",".ico", ".json"],
   "web_path": "web",
   "log_file": "log",
-  "log_name": "/server.log"
+  "log_name": "/server.log",
+  "filter_path": "filter"
 } 

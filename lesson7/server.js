@@ -4,17 +4,23 @@ const conf = require("./config")
 const fs = require("fs")
 const webLoader = require('./loader')
 const log = require("./log")
-// console.log(conf) 
+const filterSet = require("./filterLoder")
 http.createServer((request, response) => {
-  // console.log(url.parse(request.url, true).pathname)
   const pathName = url.parse(request.url, true).pathname
-  // console.log('pathName列表' + pathName)
+  for (let i = 0; i < filterSet.length; i ++) {
+    const flag = filterSet[i](request, response)
+    console.log(flag, pathName)
+    if (!flag) {
+      console.log('server. 拦截' + request.url)
+      return
+    }
+  }
   if(isStatic(pathName)){
     // 请求的静态文件
     log('读取静态文件' + pathName)
     try {
       // console.log(conf.path + pathName)
-      const data = fs.readFileSync(conf['path'] + pathName)
+      const data = fs.readFileSync(__dirname + '/' + conf['path'] + pathName)
       response.writeHead(200)
       response.write(data)
       // console.log('end')
@@ -47,7 +53,7 @@ http.createServer((request, response) => {
   }
 }).listen(conf.port)
 
-  log('服务已启动')
+log('服务已启动')
 function isStatic (pathName) {
   for (let i = 0; i < conf.static_file_type.length; i ++) {
     const temp = conf.static_file_type[i];

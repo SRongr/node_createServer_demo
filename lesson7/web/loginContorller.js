@@ -23,8 +23,9 @@ function getData (req, res) {
    
 }
 function login (req, res) {
+  console.log(1231231231231)
   const query = url.parse(req.url, true).query
-  console.log(query)
+  console.log(query, 'weishenme ')
   req.on("data", (data) => {
     dataStr = data.toString()[0] === '?' ? data.toString() : '?' + data.toString()
     const params = url.parse(dataStr, true).query
@@ -43,15 +44,16 @@ function login (req, res) {
           /* 
             ajax 跳转页面使用代码
           */
-          res.writeHead(200)
+          console.log('xie')
+          res.writeHead(200, {"Set-Cookie": "id=" + queryRes[0].id})
           res.write('OK')
           /* 
             From 表单跳转页面使用代码
             res.writeHead(302, {"location": '/main.html'})
           */
         } else {
-          // res.writeHead(500)
-          // res.write('Fail')
+          res.writeHead(500)
+          res.write('Fail')
           
           /*   // From 表单跳转页面使用代码
             res.writeHead(302,  {"location": '/error.html'})
