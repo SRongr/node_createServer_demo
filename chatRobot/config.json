@@ -1,0 +1,8 @@
+{
+  "port": 521,
+  "web_path": "web",
+  "page_path": "page",
+  "staticFile": [".html", ".css", "js", ".png", ".jpeg", ".jpg", ".gif"],
+  "log_path": "log",
+  "log_file": "server.log"
+}
