@@ -16,7 +16,6 @@ http.createServer((request, response) => {
       const file = fs.readFileSync('./' + conf.page_path + pathName)
       response.writeHead(200)
       response.write(file)
-      // console.log(file.toString())
       response.end()
     } catch (e) {
       response.writeHead(404)
