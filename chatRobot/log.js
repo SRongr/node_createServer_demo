@@ -9,4 +9,4 @@ function log (data, targetFile = conf.log_file) {
 
 module.exports = {
   log
-}
+} 
