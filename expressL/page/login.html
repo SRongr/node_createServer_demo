@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <!-- <form action="/login" method="get">
+    <input type="text" id="student_num" name="student_num"> 学号
+    <input type="password" id="pwd" name="pwd">
+    <input type="submit" value="提交">
+  </form> -->
+  <input type="text" id="student_num"> 学号
+  <input type="password" id="pwd" name="pwd">
+  <input type="button" value="提交" id="button">
+
+
+  <script>
+   
+    const button = document.getElementById('button')
+    button.onclick = function () {
+      const studentNum = document.getElementById('student_num').value
+      const pwd = document.getElementById('pwd').value
+      const http = new XMLHttpRequest()
+      http.onreadystatechange = function () {
+        if (http.readyState === 4) {
+          if (http.status === 200) {
+            console.log("写入成功")
+          } else {
+            console.log('error')
+          }
+        }
+      }
+      const params = `?studentNum=${studentNum}&pwd=${pwd}`
+      console.log(params)
+      http.open('POST', '/login')
+      http.send(params)
+    }
+    
+  </script>
+</body>
+</html>

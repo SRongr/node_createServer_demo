@@ -23,7 +23,6 @@ function getData (req, res) {
    
 }
 function login (req, res) {
-  console.log(1231231231231)
   const query = url.parse(req.url, true).query
   console.log(query, 'weishenme ')
   req.on("data", (data) => {
